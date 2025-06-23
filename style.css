@@ -33,16 +33,22 @@ body {
 
 .wordSlots {
   display: flex;
-  gap: 0.5rem;
+  gap: 8px; /* adjust as needed */
+  justify-content: center;
   margin-bottom: 1.5rem;
 }
 
 .wordSlots p {
-  font-size: 1.2rem;
-  width: 1.2rem;
-  border-bottom: 3px solid #2b2d42;
-  text-transform: uppercase;
+  display: inline-block;
+  width: 32px; /* adjust width as needed */
+  height: 40px; /* adjust height as needed */
   text-align: center;
+  font-size: 2rem;
+  border-bottom: 2px solid #000;
+  line-height: 40px; /* vertically center the letter */
+  margin: 0;
+  box-sizing: border-box;
+  text-transform: uppercase;
 }
 
 .lInput {
