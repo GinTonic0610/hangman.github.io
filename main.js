@@ -1,0 +1,205 @@
+const arr = [
+  "Cane",
+  "Gatto",
+  "Pane",
+  "Mela",
+  "Sedia",
+  "Tavolo",
+  "Scuola",
+  "Fiume",
+  "Bosco",
+  "Sole",
+  "Lampada",
+  "Inverno",
+  "Pinguino",
+  "Matita",
+  "Gelato",
+  "Montagna",
+  "Bambino",
+  "Sentiero",
+  "Castello",
+  "Specchio",
+  "Ombrello",
+  "Zucchero",
+  "Sciarpa",
+  "Trampolino",
+  "Fioraio",
+  "Zattera",
+  "Atlante",
+  "Calamaro",
+  "Elefante",
+  "Sottopassaggio",
+  "Gorgoglìo",
+  "Scherzo",
+  "Rizoma",
+  "Schiuma",
+  "Quercia",
+  "Clandestino",
+  "Scombussolato",
+  "Fisioterapia",
+  "Coscienza",
+  "Dissonanza",
+  "Astruso",
+  "Bisbiglio",
+  "Zigzagare",
+  "Starnuto",
+  "Gazzella",
+  "Sbadiglio",
+  "Sguattero",
+  "Taccuino",
+  "Vorticare",
+  "Gnomone",
+  "Inarrestabile",
+  "Sovraccarico",
+  "Incomprensibile",
+  "Sottosopra",
+  "Sovraffollato",
+  "Parallelepipedo",
+  "Involontariamente",
+  "Maldestramente",
+  "Insopportabile",
+  "Sovrastruttura",
+  "Uva",
+  "Eco",
+  "Ape",
+  "Re",
+  "Oca",
+  "Boa",
+  "Ice",
+  "Ufo",
+  "Van",
+  "Top",
+  "Jolly",
+  "Koala",
+  "Taxi",
+  "Yogurt",
+  "Whisky",
+  "Xenofobo",
+  "Jackpot",
+  "Kayak",
+  "Weekend",
+  "Extravergine",
+  "Portaombrelli",
+  "Capolavoro",
+  "Sovraccarico",
+  "Batticuore",
+  "Rompicapo",
+  "Paracadute",
+  "Spazzacamino",
+  "Sottaceto",
+  "Acchiappasogni",
+  "Fischiettare",
+  "Fantasma",
+  "Tenebre",
+  "Incubo",
+  "Segreto",
+  "Brivido",
+  "Sussurro",
+  "Oscurità",
+  "Macabro",
+  "Labirinto",
+  "Stregoneria",
+];
+
+const div = document.getElementById("app");
+const input = document.getElementById("in");
+const dialog = document.getElementById("di");
+const cButton = document.getElementById("closeButton");
+const outcome = document.getElementById("outcome");
+
+function getWord() {
+  const t = arr[Math.floor(Math.random() * arr.length)];
+  for (let i = 0; i < t.length; i++) {
+    let p = document.createElement("p");
+    p.textContent = " ";
+    p.id = i;
+    div.appendChild(p);
+  }
+  console.log(t);
+  return t;
+}
+
+let word = ""
+let letters = [];
+let nl = 0;
+let lives = 5;
+
+function renderLives() {
+  const livesDiv = document.getElementById("lives");
+  livesDiv.textContent = " ".repeat(lives).split("").map(_=>"❤️").join(" ");
+}
+
+function startGame() {
+    word = getWord().toLocaleLowerCase();
+    letters = [];
+    nl = 0;
+    lives = 5;
+    renderLives()
+}
+
+function paintLetter(i) {
+    const p = document.getElementById(i.toString());
+    p.textContent = word[i];
+}
+
+function livesDecrement() {
+  lives--;
+  renderLives()
+  if (lives === 0) {
+    outcome.textContent = "You Lost";
+    dialog.showModal();
+  }
+}
+
+function win() {
+  outcome.textContent = "You Win";
+  dialog.showModal();
+}
+
+input.onchange = (e) => {
+    const guess = e.target.value.toLowerCase();
+    e.target.value = "";
+
+    if (guess.length === 1) {
+        if (letters.includes(guess)) {
+            return; // Already guessed this letter
+        }
+        let r = false;
+        for (let i = 0; i < word.length; i++) {
+            if (word[i] === guess) {
+                paintLetter(i);
+                nl++;
+                r = true;
+                if (nl === word.length) {
+                    win();
+                    return;
+                }
+            }
+        }
+        if (r) {
+            letters.push(guess);
+            return;
+        }
+    }
+
+    if (word === guess) {
+        for (let i = 0; i < word.length; i++) {
+            paintLetter(i)
+        }
+        win();
+        return;
+    }
+
+    livesDecrement();
+};
+
+cButton.onclick = () => {
+  dialog.close();
+
+  while (div.firstChild) {
+    div.removeChild(div.lastChild);
+  }
+  startGame()
+};
+
+startGame();
