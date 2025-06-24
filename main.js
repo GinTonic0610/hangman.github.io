@@ -131,6 +131,7 @@ function renderLives() {
 
 function startGame() {
     word = getWord().toLocaleLowerCase();
+    resetAvailableLetters();
     letters = [];
     nl = 0;
     lives = 5;
@@ -156,6 +157,19 @@ function win() {
   dialog.showModal();
 }
 
+function resetAvailableLetters() {
+  for (let i = 0; i < letters.length; i++) {
+    const p = document.getElementById(letters[i].toUpperCase());
+    if (p) p.style.color = 'black';
+  }
+}
+
+function removeFromAvailableLetters(l) {
+  const p = document.getElementById(l.toUpperCase());
+  if (p) p.style.color = 'transparent';
+  
+}
+
 input.onchange = (e) => {
     const guess = e.target.value.toLowerCase();
     e.target.value = "";
@@ -178,6 +192,7 @@ input.onchange = (e) => {
         }
         if (r) {
             letters.push(guess);
+            removeFromAvailableLetters(guess);
             return;
         }
     }
