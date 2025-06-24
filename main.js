@@ -190,9 +190,9 @@ input.onchange = (e) => {
                 }
             }
         }
+        letters.push(guess);
+        removeFromAvailableLetters(guess);
         if (r) {
-            letters.push(guess);
-            removeFromAvailableLetters(guess);
             return;
         }
     }
