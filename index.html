@@ -8,7 +8,43 @@
   </head>
   <body>
     <div class="gameContainer">
-    <div id="lives" class="lives"></div>
+    <div class="scoreContainer">
+      <svg class="hangmanIcon" viewBox="0 0 200 300">
+        <!-- Gallows -->
+        <g id="gallows" stroke="#000" stroke-width="4">
+          <line x1="10" y1="290" x2="190" y2="290"/>
+          <line x1="50" y1="290" x2="50" y2="10"/>
+          <line x1="50" y1="10" x2="150" y2="10"/>
+          <line x1="150" y1="10" x2="150" y2="50"/>
+        </g>
+        <!-- Head -->
+        <g id="h5" display="none" stroke="#000" stroke-width="4" fill="none">
+          <circle cx="150" cy="75" r="25"/>
+        </g>
+        <!-- Body -->
+        <g id="h4" display="none" stroke="#000" stroke-width="4">
+          <line x1="150" y1="100" x2="150" y2="180"/>
+        </g>
+        <!-- Left Arm -->
+        <g id="h3" display="none" stroke="#000" stroke-width="4">
+          <line x1="150" y1="120" x2="120" y2="150"/>
+        </g>
+        <!-- Right Arm -->
+        <g id="h2" display="none" stroke="#000" stroke-width="4">
+          <line x1="150" y1="120" x2="180" y2="150"/>
+        </g>
+        <!-- Left Leg -->
+        <g id="h1" display="none" stroke="#000" stroke-width="4">
+          <line x1="150" y1="180" x2="120" y2="230"/>
+        </g>
+        <!-- Right Leg -->
+        <g id="h0" display="none" stroke="#000" stroke-width="4">
+          <line x1="150" y1="180" x2="180" y2="230"/>
+        </g>
+      </svg> 
+      </svg>
+      <div id="lives" class="lives"></div>
+    </div>
     <div id="app" class="wordSlots"></div>
     <output id="alert" class="alert"></output>
     <div class="guessContainer">

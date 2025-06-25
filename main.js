@@ -114,7 +114,7 @@ const keyArea = document.getElementById("letters");
 let word = ""
 let letters = [];
 let nl = 0;
-let lives = 5;
+let lives = 6;
 
 function getWord() {
   const t = arr[Math.floor(Math.random() * arr.length)];
@@ -130,7 +130,7 @@ function getWord() {
 
 function renderLives() {
   const livesDiv = document.getElementById("lives");
-  livesDiv.textContent = " ".repeat(lives).split("").map(_=>"❤️").join(" ");
+  livesDiv.textContent = " ".repeat(lives).split("").map(_=>"♥").join(" ");
 }
 
 function startGame() {
@@ -138,8 +138,9 @@ function startGame() {
     resetAvailableLetters();
     letters = [];
     nl = 0;
-    lives = 5;
-    renderLives()
+    lives = 6;
+    renderLives();
+    resetHangman();
     setListeners();
 }
 
@@ -148,10 +149,26 @@ function paintLetter(i) {
     p.textContent = word[i];
 }
 
+function paintHangman() {
+  const part = document.getElementById(`h${lives}`);
+  part.style.display = 'inline';
+}
+
+function resetHangman(){
+  for (let i = 0; i < 6; i++) {
+      const part = document.getElementById(`h${i}`);
+      part.style.display = "none";
+  }
+}
+
 function livesDecrement() {
   lives--;
   renderLives();
+  paintHangman();
   if (lives === 0) {
+    for (let i = 0; i < word.length; i++) {
+      paintLetter(i)
+    }
     showOutcome("You Lost");
   }
 }
@@ -187,7 +204,7 @@ function onKeydown(e) {
   } 
   else if (e.key === "Backspace") {
     if (e.ctrlKey || e.metaKey) {
-      input.value = ""; 
+      input.value = "";
     }
     else { 
       input.value = input.value.slice(0, -1); 
