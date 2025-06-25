@@ -65,7 +65,6 @@ const arr = [
   "RE",
   "OCA",
   "BOA",
-  "ICE",
   "UFO",
   "VAN",
   "TOP",
@@ -98,7 +97,107 @@ const arr = [
   "OSCURITA",
   "MACABRO",
   "LABIRINTO",
-  "STREGONERIA"
+  "STREGONERIA",
+  "FIORE",
+  "ALBERO",
+  "PRATO",
+  "PIAZZA",
+  "STRADA",
+  "AUTO",
+  "TRAFFICO",
+  "ARENILE",
+  "SPIAGGIA",
+  "ONDATA",
+  "VENTO",
+  "TEMPORALE",
+  "NEBBIA",
+  "ALLUMINIO",
+  "PIETRA",
+  "MURAGLIA",
+  "CASTAGNO",
+  "CASCATA",
+  "LAGO",
+  "OCEANO",
+  "BARCA",
+  "VELIERO",
+  "FARETRA",
+  "ARCO",
+  "TULIPANO",
+  "ROSPO",
+  "RANOCCHIO",
+  "RAGNO",
+  "LIBELLULA",
+  "FARFALLA",
+  "LUCCIOLA",
+  "CICOGNA",
+  "PAPPAGALLO",
+  "DONDOLO",
+  "CANYON",
+  "DESERTO",
+  "OASI",
+  "ARCOBALENO",
+  "AURORA",
+  "NOTTURNO",
+  "ALBA",
+  "TRAMONTO",
+  "STELLA",
+  "PLANETARIO",
+  "COMETA",
+  "GALASSIA",
+  "SUPERNOVA",
+  "NEBULOSA",
+  "ASTRONAUTA",
+  "ROCKET",
+  "SATELLITE",
+  "ORSETTO",
+  "PANDA",
+  "CANGURO",
+  "RICCIO",
+  "TARTARUGA",
+  "CONIGLIO",
+  "CAVALLO",
+  "SERPENTE",
+  "RODITORE",
+  "TASSELLO",
+  "VITE",
+  "PIANA",
+  "FIORIERA",
+  "CASSETTA",
+  "CHIAVE",
+  "LUCCICHIO",
+  "BRILLANTE",
+  "DIAMANTE",
+  "SMERALDO",
+  "RUBINO",
+  "ZAFFIRO",
+  "AMETISTA",
+  "PERLINA",
+  "CORALLO",
+  "GHIACCIO",
+  "NEVE",
+  "ICEBERG",
+  "TUNDRA",
+  "FENOMENO",
+  "MIRAGGIO",
+  "ECLISSI",
+  "SOLSTIZIO",
+  "EQUINOZIO",
+  "CALENDARIO",
+  "OROLOGIO",
+  "BUSSOLA",
+  "TERMOMETRO",
+  "BAROMETRO",
+  "IDROMETRO",
+  "VENDETTA",
+  "GIUSTIZIA",
+  "LIBERTÀ",
+  "CARITÀ",
+  "ORIZZONTE",
+  "RAGGIO",
+  "PRISMA",
+  "SPECIALE",
+  "MOLTITUDINE",
+  "EVASIONE"
 ];
 
 const div = document.getElementById("app");
@@ -110,6 +209,8 @@ const outcome = document.getElementById("outcome");
 const input = document.getElementById("log");
 const alert = document.getElementById("alert");
 const keyArea = document.getElementById("letters");
+const root = document.documentElement;
+const themeButton  = document.getElementById('themeButton');
 
 let word = ""
 let letters = [];
@@ -182,7 +283,7 @@ function showOutcome(o) {
 function resetAvailableLetters() {
   for (let i = 0; i < letters.length; i++) {
     const p = document.getElementById(letters[i]);
-    if (p) p.style.color = "black";
+    if (p) p.style.color = "var(--text-color)";
   }
 }
 
@@ -301,5 +402,10 @@ clearButton.onclick = () => {
 sendButton.onclick = () => {
   guessWord(input.value);
 };
+
+themeButton.onclick = () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+}
 
 startGame();
