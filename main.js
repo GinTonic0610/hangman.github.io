@@ -111,6 +111,11 @@ const input = document.getElementById("log");
 const alert = document.getElementById("alert");
 const keyArea = document.getElementById("letters");
 
+let word = ""
+let letters = [];
+let nl = 0;
+let lives = 5;
+
 function getWord() {
   const t = arr[Math.floor(Math.random() * arr.length)];
   for (let i = 0; i < t.length; i++) {
@@ -122,11 +127,6 @@ function getWord() {
   console.log(t);
   return t;
 }
-
-let word = ""
-let letters = [];
-let nl = 0;
-let lives = 5;
 
 function renderLives() {
   const livesDiv = document.getElementById("lives");
@@ -204,13 +204,16 @@ function onKeydown(e) {
 
 function onClick(e){
   if (e.target.tagName === 'P') {
-    const letter = e.target.textContent;
-    const ke = new KeyboardEvent('keydown', {
-      key: letter,
-      bubbles: true,
-      cancelable: true
-    });
-    document.dispatchEvent(ke);
+    if (input.value.length >= word.length) {
+      sendAllert("Over word length !");
+      return;
+    }
+    const letter = e.target.id;
+    if (letter === "Backspace") {
+      input.value = input.value.slice(0, -1);
+      return;
+    }
+    input.value += letter;
   }
 }
 
