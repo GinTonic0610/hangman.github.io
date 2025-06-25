@@ -102,10 +102,10 @@ const arr = [
 ];
 
 const div = document.getElementById("app");
-const input = document.getElementById("in");
 const dialog = document.getElementById("di");
 const cButton = document.getElementById("closeButton");
 const outcome = document.getElementById("outcome");
+const input = document.getElementById("log");
 
 function getWord() {
   const t = arr[Math.floor(Math.random() * arr.length)];
@@ -136,6 +136,7 @@ function startGame() {
     nl = 0;
     lives = 5;
     renderLives()
+    document.addEventListener('keydown', onKeydown);
 }
 
 function paintLetter(i) {
@@ -147,32 +148,47 @@ function livesDecrement() {
   lives--;
   renderLives()
   if (lives === 0) {
+    console.log("You Lost");
     outcome.textContent = "You Lost";
+    document.removeEventListener('keydown', onKeydown);
     dialog.showModal();
   }
 }
 
 function win() {
+  console.log("You win");
   outcome.textContent = "You Win";
+  document.removeEventListener('keydown', onKeydown);
   dialog.showModal();
 }
 
 function resetAvailableLetters() {
   for (let i = 0; i < letters.length; i++) {
     const p = document.getElementById(letters[i].toUpperCase());
-    if (p) p.style.color = 'black';
+    if (p) p.style.color = "black";
   }
 }
 
 function removeFromAvailableLetters(l) {
   const p = document.getElementById(l.toUpperCase());
-  if (p) p.style.color = 'transparent';
-  
+  if (p) p.style.color = "transparent";
 }
 
-input.onchange = (e) => {
-    const guess = e.target.value.toLowerCase();
-    e.target.value = "";
+function onKeydown(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    event.stopPropagation();
+    guessWord(input.value);
+  } else if (event.key === "Backspace") {
+    input.value = input.value.slice(0, -1);
+  } else if (event.key.length === 1) {
+    input.value += event.key;
+  }
+}
+
+function guessWord(guess) {
+    console.log(guess);
+    input.value = "";
 
     if (guess.length === 1) {
         if (letters.includes(guess)) {

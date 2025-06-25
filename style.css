@@ -49,18 +49,46 @@ body {
   text-transform: uppercase;
 }
 
-.lInput {
-  font-size: 0.8rem;
-  padding: 0.17rem;
-  width: 100%;
-  border: 2px solid #8d99ae;
-  border-radius: 0.5rem;
-  outline: none;
-  transition: border-color 0.2s;
+.gessContainer {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.lInput:focus {
-  border-color: #2b2d42;
+.guess {       
+  display: inline-block;
+  width: 82%;
+  height: 1.3rem;
+  padding: 0.1rem 0.5rem;
+  font-size: 0.8rem;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 0.4rem;
+  justify-content: center;
+}
+
+.resetButton {
+  height: 1.3rem;
+  padding: 0.1rem 0.5rem;
+  background: #b42027;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.sendButton {
+  height: 1.3rem;
+  padding: 0.1rem 0.5rem;
+  background: #0fa125;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
 .avletters {
@@ -69,12 +97,6 @@ body {
   grid-template-rows: repeat(3, auto);
   gap: 0.5rem 1rem;
   justify-items: center;
-}
-
-.avletters row {
-  display: flex;
-  justify-content: center; 
-  gap: 0.5rem;
 }
 
 .avletters p {
