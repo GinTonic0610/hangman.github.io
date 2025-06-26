@@ -240,22 +240,24 @@ body {
   padding: 1.5rem;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   text-align: center;
+  background: var(--card-bg);
 }
 
 .resultText {
   font-size: 1.5rem;
   margin-bottom: 1rem;
+  color: var(--text-color);
 }
 
 .okButton {
   padding: 0.5rem 1rem;
   font-size: 1rem;
-  background: var(--success-color);
-  color: var(--card-bg);
+  background: var(--key-bg);
+  color: var(--text-color);
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background-color 0.2s;
 }
 
 .okButton:hover {
