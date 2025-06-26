@@ -15,8 +15,11 @@
     --border-color:      #ccc;
     --text-color:        #000;
     --key-bg:            #eee;
-    --theme-color:       #eee;
+    --theme-color:       #d0d0d0;
     --theme-op-color:    #2d2d3d;
+        
+    --border-theme:     2px;
+    --border-theme-h:   1px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -32,7 +35,9 @@
     --text-color:        #7c859c;
     --key-bg:            #2d2d3d;
     --theme-color:       #7c859c;
-    --theme-op-color:    #eee;
+    --theme-op-color:    #d0d0d0;
+    --border-theme:     1px;
+    --border-theme-h:   2px;
   }
 }
 :root[data-theme="dark"] {
@@ -47,7 +52,10 @@
     --text-color:        #7c859c;
     --key-bg:            #2d2d3d;
     --theme-color:       #7c859c;
-    --theme-op-color:    #eee;
+    --theme-op-color:    #d0d0d0;
+
+    --border-theme:     1px;
+    --border-theme-h:   2px;
 }
 
 body {
@@ -77,7 +85,7 @@ body {
   align-items: center;
   justify-content: center;
   padding: 1px;                      
-  border: 1px solid var(--theme-color);  
+  border: var(--border-theme) solid var(--theme-color);  
   color: var(--theme-color);
   border-radius: 1rem;
   background: transparent;
@@ -86,9 +94,9 @@ body {
 }
 
 .theme-button:hover {
-  border: 1px solid var(--theme-op-color);
-  color: var(--theme-op-color);  
-  transform: rotate(180deg);       
+  border: var(--border-theme-h) solid var(--theme-op-color);
+  color: var(--theme-op-color);
+  transform: rotate(180deg);  
 }
 
 .gameContainer {
