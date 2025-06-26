@@ -179,20 +179,21 @@ body {
   width: 1.2rem;
   height: 100%;
   flex: 0 0 auto;
-  border: 1px solid var(--error-color);
+  border: 1.2px solid var(--error-color);
   border-radius: 1rem;
   color: var(--text-color);
   font-size: 0.6rem;
   text-align: center;
   background-color: var(--card-bg);
   cursor: pointer;
+  transition: border 0.2s;
 }
 
 .sendButton {
   width: 1.2rem;
   height: 100%;
   flex: 0 0 auto;
-  border: 1px solid green;
+  border: 1.2px solid var(--success-color);
   border-radius: 1rem;
   color: var(--text-color);
   font-size: 0.6rem;
@@ -200,24 +201,44 @@ body {
   text-align: center;
   background-color: var(--card-bg);
   cursor: pointer;
+  transition: border 0.2s;
+}
+.sendButton:hover {
+  border: 2.2px solid var(--success-color);
+}
+
+.clearButton:hover {
+  border: 2.2px solid var(--error-color);
+}
+
+.avletters {
+  display: block;
+  margin-top: 0.2rem;
 }
 
 .row {
   display: flex;
+  padding: 0.2rem 0.1rem;
   gap: 0.2rem;
   text-align: center;
-  margin-top: 0.3rem;
   justify-content: center;
+  max-height: 63px;
+  max-width: 366px;
 }
 
 .avletters p {
   display: inline-block;
   background: var(--key-bg);
+  border: 1px solid transparent;
   padding: 0.2rem 0.4rem;
   border-radius: 4px;
   font-size: 1.2rem;
   color: var(--text-color);
   cursor: pointer;
+}
+
+.avletters p:hover {
+  border: 1px solid var(--text-color);
 }
 
 .resultDialog::backdrop {
