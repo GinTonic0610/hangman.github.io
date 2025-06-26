@@ -100,7 +100,7 @@ body {
 }
 
 .gameContainer {
-  padding: 1rem;
+  padding: 0.4rem 1rem;
   display: flex;              
   flex-direction: column;
   justify-content: space-between;
@@ -108,16 +108,19 @@ body {
 
 .scoreContainer {
   display: flex;
+  max-height: 190px;
   justify-content: space-between;
 }
 
 .lives {
   font-size: 0.55rem;
   color: var(--error-color);
+  align-self: flex-start;
 }
 
 .hangmanIcon {
   color: var(--text-color);
+  margin-right: 1rem;
 }
 
 .hangmanIcon {
