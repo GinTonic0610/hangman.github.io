@@ -200,6 +200,19 @@ const arr = [
   "EVASIONE"
 ];
 
+const firebaseConfig = {
+    apiKey: "AIzaSyA1B8PGL4Jafd-BSC85vZSVX3yhWVGqPLw",
+    authDomain: "hangman-158e6.firebaseapp.com",
+    projectId: "hangman-158e6",
+    storageBucket: "hangman-158e6.firebasestorage.app",
+    messagingSenderId: "455481786698",
+    appId: "1:455481786698:web:3a57d187accf661c7c41b3"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+
 const div = document.getElementById("app");
 const dialog = document.getElementById("di");
 const outcomeButton = document.getElementById("closeButton");
@@ -211,6 +224,141 @@ const alert = document.getElementById("alert");
 const keyArea = document.getElementById("letters");
 const root = document.documentElement;
 const themeButton  = document.getElementById('themeButton');
+const accountBtn   = document.getElementById('accountBtn');
+const loginDlg   = document.getElementById('loginDialog');
+const loginForm  = document.getElementById('loginForm');
+const authEmail  = document.getElementById('authEmail');
+const authPass   = document.getElementById('authPass');
+const confirmPass  = document.getElementById('confirmPass');
+const doAuthBtn  = document.getElementById('doAuth');
+const toggleAuth = document.getElementById('toggleAuthMode');
+const googleBtnA = document.getElementById('googleAuth');
+const closeLogin = document.getElementById('closeLogin');
+const logoutDlg = document.getElementById('logoutDialog');
+const closeLogout = document.getElementById('closelogoutBtn');
+const logoutBtn = document.getElementById('logoutBtn');
+const timer = document.getElementById('timer');
+const togglePassword = document.getElementById('togglePassword');
+
+let timerId, startTime;
+
+function formatTime(ms) {
+  const totalHundredths = Math.floor(ms / 10);
+  const hundredths = totalHundredths % 100;
+  const totalSeconds = Math.floor(totalHundredths / 100);
+  const seconds = totalSeconds % 60;
+  const minutes = Math.floor(totalSeconds / 60) % 60;
+  const hours   = Math.floor(totalSeconds / 3600);
+
+  const pad = (n, z=2) => n.toString().padStart(z,'0');
+  return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}.${pad(hundredths)}`;
+}
+
+function update() {
+  const now = performance.now();
+  timer.textContent = formatTime(now - startTime);
+}
+
+function startTimer() {
+  if(timerId) {
+    return;
+  }
+  timer.textContent = formatTime(0);
+  startTime = performance.now();
+  timerId = setInterval(update, 10);
+}
+
+function stopTimer() {
+  clearInterval(timerId);
+  timerId = null;
+}
+
+let isSignInMode = true;
+let isLogged = false;
+let togglePasswordVisible = false;
+
+accountBtn.onclick = () => {
+  stopTimer();
+  if (isLogged) {
+    logoutDlg.showModal();
+    remouveListeners();
+  } else {
+  loginDlg.showModal();
+  remouveListeners();
+  }
+};
+
+closeLogin.onclick = () => {
+  loginDlg.close();
+  setListeners();
+};
+
+closeLogout.onclick = () => {
+  logoutDlg.close();
+  setListeners();
+};
+
+logoutBtn.onclick = () => {
+  logoutDlg.close();
+  auth.signOut()
+    .then(() => {
+      isLogged = false;
+      accountBtn.textContent = "Login";
+      setListeners();
+    })
+    .catch(err => alert(err.message));
+};
+
+loginDlg.addEventListener('cancel', event => {
+  event.preventDefault();
+  loginDlg.close();
+  setListeners();
+});
+
+logoutDlg.addEventListener('cancel', event => {
+  event.preventDefault();
+  logoutDlg.close();
+  setListeners();
+});
+
+toggleAuth.onclick = () => {
+  isSignInMode = !isSignInMode;
+  if (isSignInMode) {
+    doAuthBtn.textContent = 'Sign In';
+    toggleAuth.textContent = 'Sign Up';
+    confirmPass.style.display = "none";
+  } else {
+    doAuthBtn.textContent = 'Sign Up';
+    toggleAuth.textContent = 'Sign In';
+    confirmPass.style.display = "inline";
+  }
+};
+
+loginForm.onsubmit = e => {
+  e.preventDefault();
+  const email = authEmail.value;
+  const pass  = authPass.value;
+  const confirm = confirmPass.value;
+  if (isSignInMode) {
+    auth.signInWithEmailAndPassword.call(auth, email, pass).catch(err => alert(err.message));
+  } else if (pass === confirm) {
+    auth.createUserWithEmailAndPassword.call(auth, email, pass).catch(err => alert(err.message));
+  } else if (pass !== confirm) {
+    console.log("Passwords do not match!");
+  } else {
+    console.log("Unexpected error during authentication!");
+  }
+};
+
+auth.onAuthStateChanged(user => {
+  if (user) {
+    isLogged = true;
+    accountBtn.textContent = user.email.split('@')[0].split(/[\.\-_]+/).map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join('');
+    loginDlg.close();
+  } else {
+    isLogged = false;
+  }
+});
 
 let word = ""
 let letters = [];
@@ -275,6 +423,7 @@ function livesDecrement() {
 }
 
 function showOutcome(o) {
+  stopTimer();
   remouveListeners();
   outcome.textContent = o;
   dialog.showModal();
@@ -298,6 +447,12 @@ function sendAllert(message) {
     setTimeout(() => { alert.textContent = ""; }, 1000);
 }
 
+function hoverLetter(l) {
+  const p = document.getElementById(l);
+  if (p) p.classList.add("clicked");
+  setTimeout(() => { p.classList.remove("clicked") }, 100);
+}
+
 function onKeydown(e) {
   e.preventDefault();
   if (e.key === "Enter") {
@@ -309,6 +464,7 @@ function onKeydown(e) {
     }
     else { 
       input.value = input.value.slice(0, -1); 
+      hoverLetter(e.key);
     }
   }
   else if (e.key.length === 1) {
@@ -317,6 +473,10 @@ function onKeydown(e) {
       return;
     }
     input.value += e.key.toUpperCase();
+    startTimer();
+    if ("ABCDEFGHIJKLMNOPQRSTUVWXYZ".includes(e.key.toUpperCase())) {
+      hoverLetter(e.key.toUpperCase());
+    }
   }
 }
 
@@ -332,6 +492,7 @@ function onClick(e){
       return;
     }
     input.value += letter;
+    startTimer();
   }
 }
 
@@ -345,14 +506,13 @@ function remouveListeners() {
 }
 
 function guessWord(guess) {
-    console.log(guess);
     input.value = "";
-
+    
     if(guess === "") {
       sendAllert("Empty guess !");
       return;
     }
-
+    
     if (guess.length === 1) {
         if (letters.includes(guess)) {
           sendAllert("Letter already guessed !");
@@ -388,6 +548,7 @@ function guessWord(guess) {
 };
 
 outcomeButton.onclick = () => {
+  timer.textContent = formatTime(0);
   dialog.close();
   while (div.firstChild) {
     div.removeChild(div.lastChild);
@@ -406,6 +567,20 @@ sendButton.onclick = () => {
 themeButton.onclick = () => {
     const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     root.setAttribute('data-theme', next);
+}
+
+togglePassword.onclick = () => {
+  togglePasswordVisible = !togglePasswordVisible;
+  let eyeIcon = document.getElementById('eyeoff');
+  if (togglePasswordVisible) {
+    authPass.type = 'text';
+    confirmPass.type = 'text';
+    eyeoff.style.display = 'none';
+  } else {
+    authPass.type = 'password';
+    confirmPass.type = 'password';
+    eyeoff.style.display = 'inline';
+  }
 }
 
 startGame();

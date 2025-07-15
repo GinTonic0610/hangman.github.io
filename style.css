@@ -10,7 +10,7 @@
     --card-bg:           #fff;
     --shadow-color:      rgba(0, 0, 0, 0.1);
     --error-color:       #e63946;
-    --success-color:     #2b2d42;
+    --success-color:     #38b727;
     --input-bg:          #f9f9f9;
     --border-color:      #ccc;
     --text-color:        #000;
@@ -77,6 +77,11 @@ body {
   flex-direction: column;
 }
 
+.settingsContainer {
+  display: inline-flex;
+  gap: 0.5rem;
+}
+
 .theme-button {
   width: 16px;
   height: 16px;
@@ -96,11 +101,21 @@ body {
 .theme-button:hover {
   border: var(--border-theme-h) solid var(--theme-op-color);
   color: var(--theme-op-color);
-  transform: rotate(180deg);  
+  transform: rotate(180deg);
+}
+
+.accountBtn {
+  background-color: var(--key-bg);
+  color: var(--text-color);
+  border: none;
+  border-radius: 0.4rem;
+  padding: 2px 4px;
+  cursor: pointer;
+  font-size: 0.65rem;
 }
 
 .gameContainer {
-  padding: 0.4rem 1rem;
+  padding: 0.8rem 1rem;
   display: flex;              
   flex-direction: column;
   justify-content: space-between;
@@ -112,10 +127,22 @@ body {
   justify-content: space-between;
 }
 
+.livesAndTimerContainer {
+  align-items: flex-start;
+  text-align: right;
+}
+
 .lives {
+  display: inline-block;
   font-size: 0.55rem;
   color: var(--error-color);
-  align-self: flex-start;
+  flex: 0 0 auto;
+}
+
+.timerText {
+  color: var(--text-color);
+  font-size: 0.55rem;
+  padding: 1px;
 }
 
 .hangmanIcon {
@@ -162,7 +189,7 @@ body {
   display: flex;
   height: 1.2rem;
   justify-content: center;
-  gap: 1px;
+  gap: 2px;
 }
 
 .guess {
@@ -182,21 +209,25 @@ body {
   width: 1.2rem;
   height: 100%;
   flex: 0 0 auto;
-  border: 1.2px solid var(--error-color);
+  border: 1.3px solid var(--text-color);
   border-radius: 1rem;
   color: var(--text-color);
   font-size: 0.6rem;
   text-align: center;
   background-color: var(--card-bg);
   cursor: pointer;
-  transition: border 0.2s;
+}
+
+.clearButton:hover {
+  border: 1px solid var(--error-color);
+  color: var(--error-color);
 }
 
 .sendButton {
   width: 1.2rem;
   height: 100%;
   flex: 0 0 auto;
-  border: 1.2px solid var(--success-color);
+  border: 1.3px solid var(--text-color);
   border-radius: 1rem;
   color: var(--text-color);
   font-size: 0.6rem;
@@ -204,14 +235,10 @@ body {
   text-align: center;
   background-color: var(--card-bg);
   cursor: pointer;
-  transition: border 0.2s;
 }
 .sendButton:hover {
-  border: 2.2px solid var(--success-color);
-}
-
-.clearButton:hover {
-  border: 2.2px solid var(--error-color);
+  border: 1px solid var(--success-color);
+  color: var(--success-color);
 }
 
 .avletters {
@@ -243,6 +270,11 @@ body {
 .avletters p:hover {
   border: 1px solid var(--text-color);
 }
+
+.avletters p.clicked {
+  border: 1px solid var(--text-color);
+}
+
 
 .resultDialog::backdrop {
   background: rgba(0,0,0,0.4);
@@ -286,4 +318,103 @@ body {
 
 .okButton:hover {
   background: #1b1d28;
+}
+
+.logoutDialog {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  align-items: center;
+  justify-content: center;
+
+  width: 200px; 
+  border: none;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  text-align: center;
+  background: var(--card-bg);
+}
+
+.loginDialog {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  border: none;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  background: var(--card-bg);
+}
+
+.loginDialog form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+
+.loginBtnContainer {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.basicText {
+  background-color: var(--key-bg);
+  color: var(--text-color);
+  border: none;
+  border-radius: 0.4rem;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 0.65rem;
+}
+
+.passwordContainer {
+  display: flex;
+  height: 20px;
+  justify-content: space-between;
+}
+
+.eye-button {
+  display: inline-flex;
+  align-self: flex-end;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 6px;
+}
+
+input::placeholder {
+  color: var(--text-color);
+  opacity: 1; 
+}
+
+input::-webkit-input-placeholder {
+  color: var(--text-color);
+  opacity: 1;
+}
+
+input::-moz-placeholder {
+  color: var(--text-color);
+  opacity: 1;
+}
+
+input:-ms-input-placeholder {
+  color: var(--text-color);
+  opacity: 1;
+}
+
+input::-ms-input-placeholder {
+  color: var(--text-color);
+  opacity: 1;
+}
+
+button:focus {
+  outline: none;
+  box-shadow: none;
+  -webkit-tap-highlight-color: transparent;
 }
