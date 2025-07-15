@@ -289,11 +289,13 @@ accountBtn.onclick = () => {
 };
 
 closeLogin.onclick = () => {
+  timer.textContent = formatTime(0);
   loginDlg.close();
   setListeners();
 };
 
 closeLogout.onclick = () => {
+  timer.textContent = formatTime(0);
   logoutDlg.close();
   setListeners();
 };

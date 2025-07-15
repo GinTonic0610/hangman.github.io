@@ -77,11 +77,11 @@
       <input type="email"    id="authEmail"        class="basicText" placeholder="Email" required>
       <div class="passwordContainer">
       <input type="password" id="authPass"         class="basicText" placeholder="Password" required>
-      <button type="button" id="togglePassword" class="eye-button basicText" aria-label="Toggle password visibility">
+      <button type="button" id="togglePassword" class="eye-button basicText" aria-label="Toggle password visibility" tabindex="-1">
         <svg id="eye" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24">
           <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
           <circle cx="12" cy="12" r="2"/>
-          <line id="eyeoff" display="none" x1="4" y1="4" x2="20" y2="20" stroke="currentColor" stroke-width="2"/>
+          <line id="eyeoff" display="inline" x1="4" y1="4" x2="20" y2="20" stroke="currentColor" stroke-width="2"/>
         </svg>
         </button>
       </div>

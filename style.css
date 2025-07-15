@@ -378,6 +378,7 @@ body {
   display: flex;
   height: 20px;
   justify-content: space-between;
+  gap: 2px;
 }
 
 .eye-button {
